@@ -1,0 +1,87 @@
+<div class="container" style="font-family:'Cambria,'Times New Roman',serif'">
+    <div class="row mt-4 mb-2">
+        <div class="col-md-8 mx-auto">
+            <form action="/job/is/ara" method="get">
+                <div class="input-group mycustom shadow-sm rounded">
+                    <input type="text" name="search" class="form-control rounded-0 py-4 shadow-none" 
+                           id="search" placeholder="Anahtar kelime ile ara" autocomplete="off"
+                           value="<%= typeof search != 'undefined' ? search : '' %>">
+                    <div class="input-group-prepend">
+                        <button type="submit" class="btn btn-primary btn-sm rounded px-3">
+                            <span class="fas fa-search"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-3 shadow p-3 mb-5 bg-white rounded" style="height:355px;">
+            <h5 class="text-center border mb-0 p-3">Filtreler</h5>
+            <form action="/job/is/filtre/" method="get">
+                <label class="mt-1">Kategori</label>
+                <select class="form-control" name="category" placeholder="as">
+                    <option value="" selected></option>
+                    <% for(var i=0;i<category.length;i++) { %>
+                    <option <% if(typeof filter != 'undefined' && filter.category === category[i]) { %>
+                            selected
+                            <% } %>
+                            ><%= category[i] %></option>
+                    <% }%>
+                </select>
+                <label class="mt-1">Minimum Bütçe ( TL )</label>
+                <input type="number" class="form-control" name="bud" 
+                       value="<%= typeof filter != 'undefined' ? filter.budget : '' %>"/>
+                <button class="btn btn-dark btn-block mt-2" type="submit">Filtrele</button>
+            </form>
+            <div class="mt-1">
+                <h5 class="text-center">Filtrelemeler</h5>
+                <% if(typeof filter != 'undefined') { %>
+                <span class="h6">Kategori</span> : <%= filter.category %><br/>
+                <span class="h6">Min. Bütçe</span> : <%= filter.budget %> ₺<br/>
+                <% }else{ %>
+                Yok
+                <% } %>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <%
+                docs.sort(function(a,b){
+                    return (b.lastDate.getTime() - a.lastDate.getTime());
+                });
+                %>
+                <% for (var i=0;i<docs.length;i++){ %>
+                <div class="col-md-4 mb-2" id="task" style="border-size:10px">
+                    <a href="/job/is/<%= docs[i].title %>/<%= docs[i].id %>" class="w-100 h-100">
+                        <div class="border rounded p-2 bg-white text-dark">
+                            <span class="h6 text-center">
+                                <%= typeof docs[i].title != 'undefined' ? docs[i].title : '' %>
+                                <% if(typeof docs[i].acceptedOffer != 'undefined') { %>
+                                <span class="float-right fas fa-check text-success"></span>
+                                <% } %>
+                                <% if(docs[i].lastDate.getTime() < Date.now() && docs[i].offers.length === 0) { %>
+                                <span class="float-right text-danger">Süresi geçmiş</span>
+                                <% } %>
+                            </span>
+                            <hr>
+                            <span class="text-justify detail">
+                                <%= typeof docs[i].details != 'undefined' ? docs[i].details : '' %>
+                            </span>
+                            <hr>
+                            <span class="text-center" style="opacity:0.7;"><span>Tarih : </span>
+                                <%= typeof docs[i].lastDate != 'undefined' ? 
+                                    docs[i].lastDate.getUTCDate() + '.' + (docs[i].lastDate.getUTCMonth() + 1) 
+                                    + '.' + docs[i].lastDate.getUTCFullYear() : '' %>
+                            </span>
+                            <span class="float-right"><span class="text-success font-weight-bold">Bütçe : </span>
+                                <%= typeof docs[i].budget != 'undefined' ? docs[i].budget : '' %> ₺
+                            </span>
+                        </div>
+                    </a>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

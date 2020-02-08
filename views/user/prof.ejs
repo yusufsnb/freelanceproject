@@ -1,0 +1,122 @@
+<div class="container">
+    <div class="row mt-5 mb-5">
+        <div class="col-md-3">
+            <div class="card card-body shadow-lg border-success text-center p-3 bg-white">
+                <img class="mx-auto rounded-circle" src="<%= typeof data.img != 'undefined' ? 
+                                                      'data:image/jpeg;base64,' + data.img.data : 
+                                                  '/assets/img/avatar_1.png' %>" 
+                     draggable="false" style="width:58%;"/>
+                <h3 class="pt-3"><%= typeof data.username != undefined ? data.username : '' %></h3>
+                <h4 class="pt-3"><%= typeof data.university != undefined ? data.university : '' %></h4>
+                <% for(i in jobData) {
+                    cont = 0,
+                        done = 0;
+
+                    if(jobData[i].acceptedOffer.case != 'tamamlandı')
+                        cont ++;
+                    else if(jobData[i].acceptedOffer.paid === 1)
+                        done ++;
+                } %>
+                <span class="">Toplam İş Sayısı : <span class="text-info"><%= jobData.length %></span></span>
+                <span class="">Devam Eden İş Sayısı : <span class="text-warning"><%= cont %></span></span>
+                <span>Ödeme Aldığı İş Sayısı : <span class="text-success"><%= done %></span></span>
+                <script>rates = [];
+                    <% if(typeof data.userRating != 'undefined') { %>
+                    <% usRate = [];
+                    data.userRating.forEach((item) => { %>
+                    rates.push(<%= item.rate %>);
+                    <% });} %>
+                </script>
+                <div id="rateYo" class="mx-auto" <% if(typeof email == 'undefined' || 
+                                                       boolRate == true || data.email == email){%>
+                     style="pointer-events:none;"
+                     <% } %>>
+                </div>
+                <script>
+
+                    const hesapla = () => {
+                        average = rates.reduce((a,b) => {
+                            return a+b;
+                        });
+                        average /=rates.length;
+                        return average;}
+                </script>
+            </div>
+        </div>
+        <div class="offset-md-2 col-md-6" id="kutu">
+            <div class="card card-body mt-3 mx-auto rounded text-justify p-2 bg-white">
+                <p class=""><%= data.cv %></p>
+            </div>
+            <div class="card card-body text-justify mt-2">
+                <h5 class="text-center">Yetenekler</h5>
+                <% if(typeof data.talent != 'undefined'){ %>
+                <p>
+                    <% for(var i=0;i<data.talent.length;i++){ %>
+                    <span class="badge bg-primary p-1 text-light px-2"><%= data.talent[i].content %></span>
+                    <% }}else{ %>
+                    <span class="pl-4">Yetenek belirtilmemiş</span>
+                    <% } %>
+                </p>
+            </div>
+            <div class="">
+                <span class="fas fa-envelope mr-2 mt-2"></span>
+                <span class=""><%= data.email %></span>
+            </div>
+            <div class="">
+                <legend>İşleri</legend>
+                <% if(typeof jobData != 'undefined') { %>
+                <% for (var i=0;i<jobData.length;i++){ %>
+                <div class="mb-4" id="task" style="border-size:10px">
+                    <a href="/job/is/<%= jobData[i].title %>/<%= jobData[i].id %>" class="w-100 h-100">
+                        <div class="rounded border border-dark p-2 bg-light text-dark text-left">
+                            <span class="h6">
+                                <%= typeof jobData[i].title != 'undefined' ? jobData[i].title : '' %>
+                            </span>
+                            <span class="float-right"><% if(jobData[i].acceptedOffer.case === "tamamlandı"){ %>
+                                <span class="fas fa-check text-success"><span class="ml-1">Tamamlandı</span></span>
+                                <% }else{ %>
+                                <span class="text-primary">Devam Ediyor</span>
+                                <% } %>
+                            </span>
+
+                        </div>
+                    </a>
+                </div>
+                <% }} %>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    rating = rates.length != 0 ? hesapla() : 0;
+    $("#rateYo").rateYo({
+        rating: rating
+    });
+    deger = null;
+    init = 0;
+    $("#rateYo").rateYo()
+        .on("rateyo.set", function (e, data) {
+        if(init == 0){
+            deger = data.rating;    
+        }
+    });
+    $("#rateYo").click(() => {
+        if(deger != null && init == 0){
+            rates.push(deger);
+            username = `<%= data.username %>`;
+            <% boolRate = true %>
+            $.ajax({
+                url: '/user/rate',
+                type: 'POST',
+                data: {
+                    rate: rates[rates.length - 1],
+                    username: username
+                },
+                success: function(msg) {
+                }               
+            });
+        }
+        init++;
+        $("#rateYo").rateYo("option", "rating", hesapla());
+    });
+</script>

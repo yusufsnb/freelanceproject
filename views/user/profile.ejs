@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row mt-5 mb-5">
+        <div class="col-md-3">
+            <div class="card card-body shadow-lg border-success text-center p-3">
+                <form action="/user/upImage" method="post" enctype="multipart/form-data">
+                    <input type="file" name="filename" id="file"/>Resim Seç
+                    <button type="submit" id="upload">Yükle</button>
+                </form>
+                <img class="mx-auto rounded-circle" src="<%= typeof decodedImage != 'undefined' ? 
+                                                             'data:image/jpeg;base64,' + decodedImage : 
+                                                         '/assets/img/avatar_1.png' %>" draggable="false" style="width:58%;"/>
+                <h3 class="pt-3"><%= typeof name != undefined ? name : '' %></h3>
+                <h4 class="pt-3"><%= typeof uniname != undefined ? uniname : '' %></h4>
+                <a class="btn btn-success text-light mt-3" 
+                   href="<%= email.includes('edu.tr') == true ? '/user' : '/employer' %>/bilgi_guncelle">
+                    Profilimi Güncelle</a>
+                <a href="/user/upImg" class="btn btn-danger">Yükle</a>
+            </div>
+            <script>/*
+                $(document).ready(function(){
+                    $("#upload").mouseup(function(e){
+                        $.ajax({
+                            url: '/user/upImg',
+                            type: 'GET',
+                            success: function(msg) {
+                            }               
+                        });
+                    });
+                });*/
+            </script>
+        </div>
+        <div class="offset-md-2 col-md-6" id="kutu">
+            <% dizi = ['İş Yükle', 'İşlerim', 'Staj Yükle', 'Stajlarım']; 
+            dizi_href = ['/job/yukle', '/job/islerim', '/intern/yukle', '/intern/stajlarim'];
+            dizi2 = ['İş Yükle', 'Staj Ara', 'Yeteneklerim', 'İşlerim', 'Görevlerim']
+            dizi2_href= ['/job/yukle', '/intern/staj', 'yeteneklerim', '/job/islerim', '/job/isler'] %>
+            <div class="row">
+                <% if(email.includes('edu.tr')) { %>
+                <% for(var i=0;i<dizi2.length;i++) {%>
+                <a class="col-md-3 btn btn-default border border-lg border-success m-3 px-4 py-3 shadow-lg" 
+                   href="<%= dizi2_href[i] %>">
+                    <%= dizi2[i] %>
+                </a>
+                <% }}else{ %>
+                <% for(var i=0;i<dizi.length;i++) {%>
+                <a class="col-md-3 btn btn-default border border-lg border-success m-3 px-4 py-3 shadow-lg" 
+                   href="<%= dizi_href[i] %>">
+                    <%= dizi[i] %>
+                </a>
+                <% }} %>
+            </div>
+            <% if(email.includes('edu.tr')) { %>
+            <div class="border border-dark mt-3 mx-auto text-justify p-2 bg-light rounded">
+                <p class=""><%= cv %></p>
+            </div>
+            <% } %>
+
+        </div>
+    </div>
+</div>

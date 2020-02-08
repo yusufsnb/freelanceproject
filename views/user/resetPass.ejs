@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row mt-5 mb-5">
+        <div class="col-md-6 mx-auto">
+            <% include ../partials/messages %>
+            <form action="/user/reset/<%= token %>" method="POST">
+                <legend>Şifremi Değiştir</legend>
+                <div class="form-group">
+                    <label for="pass">Yeni Şifre</label>
+                    <input type="password" name="password" autofocus class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="pass">Şifre Doğrula</label>
+                    <input type="password" name="passwordCheck" autofocus class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary mt-2">Şifremi Değiştir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

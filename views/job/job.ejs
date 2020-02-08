@@ -1,0 +1,92 @@
+<div class="container">
+    <div class="row my-5">
+        <div class="col-md-6 mb-2 card card-body border border-dark shadow-lg">
+            <% if(typeof deger != 'undefined') { %>
+            <% var boolOffer = true; %>
+            <h3 class="text-primary"><%= deger.title %>
+                <% usName = "employer"; if(deger.email.includes('edu.tr')) { usName = "user"} %>
+                <span class="h6 float-right text-dark pt-2">
+                    <a href="/<%= usName %>/profil/<%= deger.username %>">
+                        <%= deger.username %>
+                    </a>
+                </span>
+            </h3>
+            <span class="text-muted">Teslim Tarihi : <span class=""><%= deger.lastDate.getUTCDate() 
+                    + '.' + (deger.lastDate.getUTCMonth() + 1) 
+                    + '.' + deger.lastDate.getUTCFullYear() %></span>
+            </span>
+            <hr class="border-dark">
+            <p><%= deger.details %></p>
+            <span class="h4 float-right text-success">
+                Bütçe : <span class="h4 text-dark"><%= deger.budget %> ₺ </span>
+            </span>
+            <% if(typeof deger.file != 'undefined') { %>
+            <a class="btn btn-primary text-light px-3 py-2 mx-auto"
+               href="/job/download/<%= deger.id %>">
+                Dosyayı indir<span class="fas fa-download ml-2"></span>
+            </a>
+            <% } %>
+            <% } %>
+        </div>
+        <div class="offset-md-2 col-md-4 card card-body border border-dark shadow-lg"
+             style="height:250px;overflow:auto">
+            <h5 class="text-center">Teklifler</h5><hr>
+            <% for(var i=0;i<deger.offers.length;i++) { %>
+            <span>
+                <a href="/user/profil/<%= deger.offers[i].username%>">
+                    <%= deger.offers[i].username %></a> <%= deger.offers[i].offer %>₺
+                <% if(typeof deger.acceptedOffer != 'undefined') { %>
+                <% if(deger.acceptedOffer.email == deger.offers[i].email) { %>
+                <span class="text-success float-right">İşe kabul edildi</span>
+                <% }} %>
+                <hr>
+            </span>
+            <% if(deger.email == email & typeof deger.acceptedOffer == 'undefined') { %>
+            <a href="/job/accept/<%= deger.id %>/<%= deger.offers[i].id %>" class="btn btn-success">Kabul Et</a>
+            <% }} %>
+            <% for(var i=0;i<deger.offers.length;i++) { %>
+            <% if(email == deger.offers[i].email) { %>
+            <% boolOffer = false; break; %>
+            <% }} %>
+            <% if(typeof email != 'undefined') { %>
+            <% if(deger.email != email & boolOffer != false & email.includes('edu.tr') & typeof deger.acceptedOffer == 'undefined') { %>
+            <% if(!(Date.now() >= deger.lastDate.getTime())) { %>
+            <form action="/job/is/<%= deger.title %>/<%= deger.id %>" method="POST" role="form" 
+                  class="position-absolute fixed-bottom my-3 mx-4">
+                <div class="input-group">
+                    <input type="text" name="offer" autocomplete="off" aria-label="Recipient's username" 
+                           aria-describedby="basic-addon2" class="form-control" style="outline:none;"/>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">Teklif Yap</button>
+                    </div>
+                </div>
+            </form>
+            <% }}} %>
+        </div>
+    </div>
+    <div class="row my-3">
+        <div class="col-md-6 card card-body" style="background-color:darkslategray;">
+            <h5 class="text-light">Yorumlar</h5>
+            <hr class="border-light mb-4">
+            <% if(deger.reply.length == 0) { %>
+            <h5 class="px-3 mb-4">İlk yorumu sen yap...</h5>
+            <% } %>
+            <% for (var i=0;i<deger.reply.length;i++) { %>
+            <h5>
+                <%= deger.reply[i].rep%> 
+                <span class="text-light float-right">
+                    <a href="/user/prof/<%= deger.reply[i].username %>">
+                        <%= deger.reply[i].username %></a>
+                </span>
+            </h5>
+            <% } %>
+            <form action="/job/is/<%= deger.id %>" method="post" role="form">
+                <div class="form-group mb-0">
+                    <textarea class="form-control mb-1" style="resize:none;" rows="2" 
+                              name="comment" placeholder="Yorumunu yaz..."></textarea>
+                    <input type="submit" class="btn btn-dark btn-block"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

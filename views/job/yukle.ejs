@@ -1,0 +1,88 @@
+<%
+var today = new Date();
+var dd = today.getDate();
+var MM = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+
+if(dd<10) {
+    dd = '0'+dd
+} 
+
+if(MM<10) {
+    MM = '0'+MM
+} 
+
+today = yyyy + '-' + MM + '-' + dd;
+%>
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-6">
+            <div class="card card-body border border-success">
+                <% include ../partials/messages %>
+                <legend>İş Yükle</legend>
+                <form action="/job/upload" method="post" enctype="multipart/form-data">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <input type="submit" class="btn btn-dark" value="Dosya Yükle"/>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" name="filename" class="custom-file-input" id="inputGroupFile04"/>
+                            <label class="custom-file-label" for="inputGroupFile04">Dosya Seç</label>
+                        </div>
+                    </div>
+                </form>
+                <form action="<%= proc == 'upload' ? '/job/yukle' : 
+                              '/job/guncelle/' + id %>" method="post" role="form">
+                    <div class="form-group">
+                        <label for="head">Başlık</label>
+                        <input type="text" name="title" class="form-control  border-dark"
+                               placeholder="Görevinizin başlığını yazınız." id="head"
+                               value="<%= typeof title != 'undefined' ? title : ''; %>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="catName">Kategori</label>
+                        <select type="text" name="category" class="form-control border-dark"
+                                placeholder="Kategori seçiniz." id="catName">
+                            <% if (typeof(category) != 'undefined') { %>
+                            <% for(var i = 0;i<category.deger.length;i++) { %>
+                            <option><%= category.deger[i] %></option>
+                            <% }}%>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inf">Bilgiler</label>
+                        <textarea name="info" class="form-control border-dark" id="inf" 
+                                  placeholder="Verdiğiniz iş ile ilgili detayları yazınız." 
+                                  rows="4" style="resize:none"><%= typeof info != 'undefined' ? info : ''; %></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bud">Maximum Bütçem</label>
+                        <input type="text" name="budget" class="form-control  border-dark"
+                               placeholder="Bütçenizi TL olarak giriniz." id="bud"
+                               value="<%= typeof budget != 'undefined' ? budget : ''; %>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="dat">Son Teslim Tarihi</label>
+                        <input type="date" name="date" class="form-control border-dark" min="<%= today %>"
+                               id="dat" value="<%= typeof date != 'undefined' ? date : today %>"/>
+                    </div>
+                    <button type="submit" class="btn btn-info btn-block mt-4">
+                        <%= proc == 'upload' ? 'Yükle' : 'Güncelle' %>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="offset-md-1 col-md-5">
+            <legend class="text-center">İş Yükleme Adımları</legend>
+            <p class="text-justify">Bu sayfa aracılığıyla iş yükleyebilirsiniz.Yüklediğiniz işlere teklif gelmesi halinde mail aracılığıyla bilgilendirileceksiniz.Hesabım sayfasındaki "işlerim" bölümünden yüklediğiniz işleri görüntüleyebilirsiniz.
+                İşlerininz üzerinden güncelleme, kaldırma ve ödeme işlemlerinin gerçekleştirebilirsiniz.Ayrıca teklif yapan kullanıcılar hakkında detaylı bilgi almak için profil sayfalarını inceleyebilirsiniz.Sadece öğrenci olan kullanıcılar teklif yapabilirler.</p>
+            <ul class="list-group text-justify">
+                <li class="list-group-item">1.Yükleyeceğiniz iş için dosya da ekleyecek iseniz öncelikle dosya seçilir ve "dosya yükle"'ye tıklanır.</li>
+                <li class="list-group-item">2.Ardından gerekli bilgiler yazılır ve işiniz yüklenir.</li>
+                <li class="list-group-item">3.İş yüklendikten sonra "Görevler" bölümünden görüntüleyebilirsiniz.</li>
+                <li class="list-group-item">4.İşi yükledikten sonra teklif gelmemesi halinde güncelleme veya kaldırma işlemi yapabilirsiniz.</li>
+                <li class="list-group-item">5.Teklif geldikten sonra teklif yapan kullanıcıların profilleri inceleyebilirsiniz.Eğer teklifi kabul edecek iseniz iş sayfasından teklifi kabul et diyerek işi vermiş olursunuz.Teklif kabul edildikten sonra geri alınamaz.</li>
+            </ul>
+        </div>
+    </div>
+</div>

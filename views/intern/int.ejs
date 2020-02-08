@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row text-center my-4 text-justify">
+        <div class="col-md-8 mb-3 mx-auto card" id="task">
+            <div class="p-2">
+                <p class="h5 text-left">
+                    <%= typeof docs.name != 'undefined' ? docs.name : '' %>
+                    <span class="float-right pt-1 h6">
+                        <%= typeof docs.city != 'undefined' ? docs.city : '' %>
+                    </span>
+                </p>
+                <hr>
+                <p class="text-justify">
+                    <%= docs.info != 'undefined' ? docs.info : '' %>
+                </p>
+                <p>
+                    <% if(typeof docs.imkan != 'undefined') { %>
+                    <% if(docs.imkan.yol === "on") { %>
+                    <span class="fas fa-check text-success"><span class="ml-1">Yol</span></span>
+                    <% }else{ %>
+                    <span class="fas fa-times text-danger"><span class="ml-1">Yol</span></span>
+                    <% } %>
+                    <% if(docs.imkan.yemek === "on") { %>
+                    <span class="fas fa-check text-success"><span class="ml-1">Yemek</span></span>
+                    <% }else{ %>
+                    <span class="fas fa-times text-danger"><span class="ml-1">Yemek</span></span>
+                    <% } %>
+                    <% if(docs.imkan.yer === "on") { %>
+                    <span class="fas fa-check text-success"><span class="ml-1">Kalacak Yer</span></span>
+                    <% }else{ %>
+                    <span class="fas fa-times text-danger"><span class="ml-1">Kalacak Yer</span></span>
+                    <% } %>
+                    <% if(docs.imkan.maas === "on") { %>
+                    <span class="fas fa-check text-success"><span class="ml-1">Maaş</span></span>
+                    <% }else{ %>
+                    <span class="fas fa-times text-danger"><span class="ml-1">Maaş</span></span>
+                    <% } %>
+                    <% } %>
+                </p>
+                <p><%= docs.tur %> Dönemi</p>
+                <hr>
+                <span class="text-justify">
+                    <i class="fas fa-envelope my-1 mx-2"></i>
+                    <%= typeof docs.mail != 'undefined' ? docs.mail : '' %>
+                    <% if(typeof docs.linkedin != 'undefined') { %>
+                    <a href="<%= docs.linkedin %>" class="float-right h5">
+                        <i class="fab fa-linkedin-in mx-2 text-info"></i>
+                    </a>
+                    <% } %>
+                    <% if(typeof docs.intern_link != 'undefined') { %>
+                    <a href="<%= docs.intern_link %>" class="float-right h5">
+                        <i class="fas fa-link mx-2 text-info"></i>
+                    </a>
+                    <% } %>
+                </span><br/>
+
+            </div>
+        </div>
+    </div>
+</div>

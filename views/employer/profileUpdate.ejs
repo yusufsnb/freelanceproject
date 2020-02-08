@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col-md-6 mx-auto">
+            <div class="card card-body">
+                <% include ../partials/messages %>
+                <form action="/employer/bilgi_guncelle" method="post" role="form">
+                    <div class="form-group">
+                        <label for="usName">Kullanıcı Adınız</label>
+                        <input type="text" id="usName" class="form-control" name="username"
+                               value="<%= typeof username != 'undefined' ? username : '' %>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pswd">Şifreniz</label>
+                        <input type="password" id="pswd" class="form-control" name="password"
+                               value="<%= typeof password != 'undefined' ? password : '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="mail">Email</label>
+                        <input type="email" id="mail" class="form-control" name="email"
+                               value="<%= typeof email != 'undefined' ? email : '' %>"/>
+                    </div>
+                    <button type="submit" class="btn btn-success mb-5 btn-block">Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

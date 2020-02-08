@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col-md-6 mx-auto">
+            <div class="card card-body">
+                <% include ../partials/messages %>
+                <form action="/user/signup" method="post" role="form">
+                    <div class="form-group">
+                        <label for="usName">Kullanıcı Adınız</label>
+                        <input type="text" id="usName" class="form-control" name="username"
+                               value="<%= typeof username != 'undefined' ? username : '' %>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pswd">Şifreniz</label>
+                        <input type="password" id="pswd" class="form-control" name="password"
+                               value="<%= typeof password != 'undefined' ? password : '' %>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pswd">Şifrenizi tekrar giriniz</label>
+                        <input type="password" id="pswd" class="form-control" name="passwordCheck"
+                               value="<%= typeof passwordCheck != 'undefined' ? passwordCheck : '' %>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="mail">Email</label>
+                        <input type="email" id="mail" class="form-control" name="mail"
+                               value="<%= typeof mail != 'undefined' ? mail : '' %>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="college">Üniversiteniz</label>
+                        <select class="form-control" name="university" id="college">
+                            <% if(typeof unis != 'undefined' ) {%>
+                            <% for(var names in unis.deger) { %>
+                            <option><%= unis.deger[names] %></option>
+                            <%}}%>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cv">Kısa cv</label>
+                        <textarea name="cv" rows="5" style="resize:none;" class="form-control"
+                                  placeholder="Biraz kendinden bahset"><%= typeof cv != 'undefined' ? cv : '' %></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger mb-5 btn-block">Kayıt Ol</button>
+                    <p class="lead mt-3" style="font-size:125%; !important">
+                        Hesabın mı var?<a href='/user/login'>Giriş Yap</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

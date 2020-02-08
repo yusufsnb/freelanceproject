@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row mt-5 mb-5">
+        <div class="col-md-6 mx-auto">
+            <% include ../partials/messages %>
+            <form action="/user/sifre_unuttum" method="POST">
+                <legend>Şifremi Unuttum</legend>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="mail" autofocus class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary mt-2">Şifremi Sıfırla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

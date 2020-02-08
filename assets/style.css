@@ -1,0 +1,92 @@
+htlml, body{
+    margin:0;
+    height: 100%;
+    background-image: url(https://images.pexels.com/photos/326240/pexels-photo-326240.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+}
+.bg-header{
+    background-color: #1ABFAE;
+}
+.menu-item, .bell-item{
+    font-size: 110%;margin-right: 20px;text-align: center;font-weight: 500;
+}
+.bell-item{
+    margin-right: 10px;
+}
+.menu-item a:hover{
+    color: aquamarine !important;
+    transition: color 0.4s ease;
+}
+/*Menü Animasyonu Alttan Kenarlık*/
+.link-anim {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    position: relative;
+    overflow: hidden;
+}
+.link-anim:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    background: #ECF0F1;
+    height: 2px;
+    -webkit-transition-property: left, right;
+    transition-property: left, right;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+.link-anim:hover:before, .link-anim:focus:before, .link-anim:active:before {
+    left: 0;
+    right: 0;
+}
+/*Menü animasyon Sonu*/
+/*Butonların Kodu*/
+.link-btn{
+    margin-right: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/*Profil sayfası kutuları*/
+#kutu{
+    text-align: center;
+}
+#kutu a{
+    font-weight: 600;
+}
+#kutu a:hover{
+    background-color: darkslategray;
+    color: white;
+}
+/*İş sayfası*/
+#task a{
+    color: black;
+}
+#task a:link{
+    text-decoration: none;
+    outline: none;
+}
+.detail {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.multiselect-container>li>a>label {
+    padding: 4px 20px 3px 20px;
+}
+/*İletişim Sayfası harita*/
+@media screen and (max-width:768px){
+    .link-btn a{
+        width: 50%;
+    }
+}

@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row my-5">
+        <div class="offset-md-3 col-md-6 mb-2">
+            <% for(i in data) {
+                cont = 0,
+                    done = 0;
+
+                if(data[i].acceptedOffer.case != 'tamamlandı')
+                    cont ++;
+                else if(data[i].acceptedOffer.paid === 1)
+                    done ++;
+            } %>
+            <span class="mr-3">Toplam İş Sayısı : <span class="text-info"><%= data.length %></span></span>
+            <span class="mr-3">Devam Eden İş Sayısı : <span class="text-warning"><%= cont %></span></span>
+            <span>Ödeme Aldığı İş Sayısı : <span class="text-success"><%= done %></span></span>
+        </div>
+        <% for(var i=0;i<data.length;i++) { %>
+        <a href="/job/is/<%= data[i].title %>/<%= data[i].id %>" class="w-100 h-100 text-dark text-decoration-none">
+            <div class="col-md-6 mx-auto border border-dark p-3">
+
+                <span class="h5"><%= data[i].title %></span>
+                <span class="float-right">
+                    <% if(data[i].acceptedOffer.case !== 'tamamlandı') { %>
+                    <a href="/job/done/<%= data[i].id %>">
+                        <span class="fas fa-check text-success mr-1">
+                            <span class="text-dark">Tamamla</span>
+                        </span></a>
+                    <% }if(data[i].acceptedOffer.paid === 1) { %>
+                    <span class="text-success">Ödeme Alındı</span>
+                    <% }else{ %>
+                    <span class="text-success">Tamamlandı</span>
+                    <% } %>
+                </span>
+            </div>
+        </a>
+        <% } %>
+    </div>
+</div>

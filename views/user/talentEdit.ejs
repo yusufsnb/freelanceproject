@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row mt-5 mb-2">
+        <div class="offset-md-4 col-md-4 text-center">
+            <form action="/user/yeteneklerim" method="post" role="form">
+                <div class="form-group">
+                    <input type="text" name="talent" class="form-control" placeholder="Yeteneğinizi giriniz"
+                           autocomplete="off"/>
+                </div>
+                <button type="submit" class="btn btn-success text-center btn-block">Ekle</button>
+            </form>
+        </div>
+    </div>
+    <% if(deger.talent.length > 0) { %>
+    <div class="row">
+        <div class="offset-md-3 col-md-6">
+            <% for(var i=0;i<deger.talent.length;i++) { %>
+            <span class="bg-dark text-light form-control mb-1">
+                <% if(deger.talent[i].id === id) { %>
+                <form action="/user/yeteneklerim/edit/<%= deger.talent[i].id %>" method="post" role="form">
+                    <input type="text" value="<%= deger.talent[i].content %>" name="content">
+                    <span class="float-right">
+                        <button type="submit" class="btn btn-success">Kaydet</button>
+                        <a href="/user/yeteneklerim" class="btn btn-danger">İptal</a>
+                    </span>
+                </form> 
+                <% }else{ %>
+                <%= deger.talent[i].content %> 
+                <span class="float-right">
+                    <a href="/user/yeteneklerim/edit/<%= deger.talent[i].id %>">
+                        <span class="fas fa-edit text-success mr-2"></span>
+                    </a>
+                    <a href="/user/yeteneklerim/delete/<%= deger.talent[i].id %>">
+                        <span class="fas fa-trash text-danger"></span>
+                    </a>
+                </span>
+                <% } %>
+            </span>
+            <% } %>
+        </div>
+    </div>
+    <% } %>
+</div>

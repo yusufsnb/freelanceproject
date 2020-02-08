@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-header static-top shadow">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="/assets/img/logo.png" alt="" width="200">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item menu-item">
+                    <a class="nav-link text-dark link-anim" href="/">
+                        <%= typeof email != 'undefined' ? 'HESABIM' : 'ANASAYFA' %></a>
+                </li>
+                <li class="nav-item menu-item">
+                    <a class="nav-link text-dark link-anim" href="/intern/staj">STAJ</a>
+                </li>
+                <li class="nav-item menu-item">
+                    <a class="nav-link text-dark link-anim" href="/job/is">GÖREVLER</a>
+                </li>
+                <li class="nav-item menu-item">
+                    <a class="nav-link text-dark link-anim" href="/iletisim">İLETİŞİM</a>
+                </li>
+                <% if(typeof(email) == 'undefined') { %>
+                <li class="nav-item link-btn">
+                    <a href="/user/login" class="btn btn-light get-started-btn mt-1 mb-1 text-dark">Giriş Yap</a>
+                </li>
+                <li class="nav-item link-btn dropdown">
+                    <button class="btn btn-dark get-started-btn mt-1 mb-1 dropdown-toggle" 
+                            type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                            aria-haspopup="true" aria-expanded="false">Kayıt Ol</button>
+                    <div class="dropdown-menu p-0 text-center" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item bg-success text-white" href="/user/signup">Öğrenci Kayıt</a>
+                        <a class="dropdown-item bg-dark text-white" href="/employer/signup_is">İşveren Kayıt</a>
+                    </div>
+                </li>
+                <% }%>
+                <%  if(typeof(email) != 'undefined'){ %>
+                <li class="nav-item bell-item">
+                    <a class="nav-link text-light" href=""><span class="fas fa-bell"></span></a>
+                </li>
+                <li class="nav-item bell-item">
+                    <a href="/user/logout" class="nav-link text-danger">
+                        <span class="fas fa-sign-out-alt"></span>
+                    </a>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>

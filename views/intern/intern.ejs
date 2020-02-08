@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-8 mx-auto">
+            <form action="/intern/staj/ara" method="get">
+                <div class="input-group mycustom shadow-sm rounded">
+                    <input type="text" name="search" class="form-control rounded-0 py-4 shadow-none" 
+                           id="search" placeholder="Anahtar kelime ile ara" autocomplete="off"
+                           value="<%= typeof search != 'undefined' ? search : '' %>">
+                    <div class="input-group-prepend">
+                        <button type="submit" class="btn btn-primary btn-sm rounded px-3">
+                            <span class="fas fa-search"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row text-center my-4 text-justify">
+        <div class="col-md-3 shadow p-3 mb-5 bg-white rounded" style="height:355px;">
+            <h5 class="text-center border mb-0 p-3">Filtreler</h5>
+            <form action="/intern/staj/filtre/" method="get">
+                <label class="mt-1 float-left">Staj Dönemi</label>
+                <select class="form-control" name="tur">
+                    <option value="" selected></option>
+                    <option value="Kış">Kış</option>
+                    <option value="Yaz">Yaz</option>
+                </select>
+                <label class="float-left mt-1">İmkanlar</label><br/><br/>
+                <span class="float-left">
+                    <input type="checkbox" name="yol" class="ml-2"/><span class="h6 ml-2">Yol</span><br/>
+                </span><br/>
+                <span class="float-left">
+                    <input type="checkbox" class="ml-2" name="maas"/><span class="h6 ml-2">Maaş</span><br/>
+                </span><br/>
+                <button class="btn btn-dark btn-block mt-2" type="submit">Filtrele</button>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <% for (var i=0;i<docs.length;i++){ %>
+                <a href="/intern/staj/<%= docs[i].name %>">
+                    <div class="col-md-6 mb-3" id="task">
+                        <div class="rounded border border-dark p-2 bg-white">
+                            <p class="h5 text-left">
+                                <%= typeof docs[i].name != 'undefined' ? docs[i].name : '' %>
+                                <span class="float-right pt-1 h6">
+                                    <%= typeof docs[i].city != 'undefined' ? docs[i].city : '' %>
+                                </span>
+                            </p>
+                            <hr>
+                            <p class="text-justify detail">
+                                <%= docs[i].info != 'undefined' ? docs[i].info : '' %>
+                            </p>
+                            <hr>
+                            <span class="text-justify">
+                                <i class="fas fa-envelope my-1 mx-2"></i>
+                                <%= typeof docs[i].mail != 'undefined' ? docs[i].mail : '' %>
+                                <% if(typeof docs[i].linkedin != 'undefined') { %>
+                                <a href="<%= docs[i].linkedin %>" class="float-right h5">
+                                    <i class="fab fa-linkedin-in mx-2 text-info"></i>
+                                </a>
+                                <% } %>
+                                <% if(typeof docs[i].intern_link != 'undefined') { %>
+                                <a href="<%= docs[i].intern_link %>" class="float-right h5">
+                                    <i class="fas fa-link mx-2 text-info"></i>
+                                </a>
+                                <% } %>
+
+                            </span><br/>
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+            </div>
+        </div>
+
+    </div>
+</div>

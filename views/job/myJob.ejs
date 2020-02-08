@@ -1,0 +1,139 @@
+<div class="container my-5">
+    <a class="btn btn-primary mt-4" data-toggle="collapse" href="#jobs" role="button" aria-expanded="false" aria-controls="jobs">
+        <span class="fas fa-plus"> Devam eden işlerim</span>
+    </a>
+    <a class="btn btn-success mt-4" data-toggle="collapse" href="#doneJobs" role="button" aria-expanded="false" aria-controls="jobs">
+        <span class="fas fa-plus"> Ödemesi yapılan işlerim</span>
+    </a>
+    <a class="btn btn-danger mt-4" data-toggle="collapse" href="#expireJobs" role="button" aria-expanded="false" aria-controls="jobs">
+        <span class="fas fa-plus"> Süresi dolan işlerim</span>
+    </a><br/>
+    <div class="row my-4 collapse" id="jobs">
+        <legend class="text-center">Devam Eden İşlerim</legend>
+        <%
+        docs.sort(function(a,b){
+            return (b.lastDate.getTime() - a.lastDate.getTime());
+        });
+        %>
+        <% for (var i=0;i<docs.length;i++){ %>
+        <div class="col-md-4 mb-2" id="task">
+            <a href="/job/is/<%= docs[i].title %>/<%= docs[i].id %>" class="w-100 h-100">
+                <div class="rounded border border-dark p-2 bg-light text-dark">
+                    <p class="text-left">
+                        <span class="h6"><%= typeof docs[i].title != 'undefined' ? docs[i].title : '' %></span>
+                        <span class="text-secondary float-right">Son Tarih : 
+                            <%= typeof docs[i].lastDate != 'undefined' ? 
+                                docs[i].lastDate.getUTCDate() + '.' + (docs[i].lastDate.getUTCMonth() + 1) 
+                                + '.' + docs[i].lastDate.getUTCFullYear() : '' %>
+                        </span>
+                    </p>
+                    <hr>
+                    <span class="text-justify detail">
+                        <%= typeof docs[i].details != 'undefined' ? docs[i].details : '' %>
+                    </span>
+                    <form action="/job/islerim/<%= docs[i].id %>" method="post">
+                        <span class=""><a
+                                          <% if(typeof docs[i].acceptedOffer === 'undefined') { %>
+                                          href="/job/guncelle/<%= docs[i]._id %>" 
+                                          <% } %> 
+                                          class="btn text-light mt-1">
+                            <span class="fas fa-edit h5 text-primary"></span></a>
+                        </span>
+                        <button type="submit" class="btn mt-1"
+                                <% if(typeof docs[i].acceptedOffer != 'undefined') { %>
+                                disabled
+                                <% } %>>
+                            <span class="fas fa-trash-alt h5 text-danger"></span>
+                        </button>
+                        <button type="button" class="btn mt-1" data-toggle="tooltip" data-placement="bottom" 
+                                title="<% if(Date.now() < docs[i].lastDate.getTime() && docs[i].offers.length==0){ %>
+                                       Teklif Bekleniyor...
+                                       <% }else if(Date.now() < docs[i].lastDate.getTime() && docs[i].offers.length>0 && 
+                                                   typeof docs[i].acceptedOffer == 'undefined'){ %>
+                                       Teklifleri Değerlendir
+                                       <% }else if(typeof docs[i].acceptedOffer != 'undefined'){ %>
+                                       İş devam ediyor
+                                       <% }else { %>
+                                       Süresi Geçmiş(Teklif Yok)
+                                       <% } %>">
+                            <span class="far fa-question-circle h5"></span>
+                        </button>
+                        <% if(typeof docs[i].acceptedOffer != 'undefined') { %>
+                        <span class="float-right"><a
+                                                     <% if(docs[i].acceptedOffer.case == 'tamamlandı' & docs[i].acceptedOffer.paid == 0) { %>
+                                                     href="/job/send/<%= docs[i]._id %>" 
+                                                     <% } %>
+                                                     class="btn btn-info text-light  mt-1"
+                                                     >
+                            <% if(docs[i].acceptedOffer.case == 'tamamlandı' & docs[i].acceptedOffer.paid == 1) { %>
+                            Ödeme Yapıldı
+                            <% }else if(docs[i].acceptedOffer.case == 'tamamlandı' & docs[i].acceptedOffer.paid == 0){ %>
+                            Ödemeyi Yap
+                            <% }else{ %>
+                            Devam Ediyor
+                            <% } %></a>
+                        </span>
+                        <% } %>
+                    </form>
+                </div>
+            </a>
+        </div>
+        <% } %>
+    </div>
+    <div class="row my-4 collapse" id="doneJobs">
+        <legend class="text-center">Ödemesi Yapılan İşlerim</legend>
+        <%
+        done.sort(function(a,b){
+            return (b.lastDate.getTime() - a.lastDate.getTime());
+        });
+        %>
+        <% for (var i=0;i<done.length;i++){ %>
+        <div class="col-md-4 mb-2" id="task">
+            <a href="/job/is/<%= done[i].title %>/<%= done[i].id %>" class="w-100 h-100">
+                <div class="rounded border border-dark p-2 bg-light text-dark">
+                    <p class="text-left">
+                        <span class="h6"><%= typeof done[i].title != 'undefined' ? done[i].title : '' %></span>
+                        <span class="text-secondary float-right">Son Tarih : 
+                            <%= typeof done[i].lastDate != 'undefined' ? 
+                                done[i].lastDate.getUTCDate() + '.' + (done[i].lastDate.getUTCMonth() + 1) 
+                                + '.' + done[i].lastDate.getUTCFullYear() : '' %>
+                        </span>
+                    </p>
+                    <hr>
+                    <span class="text-justify detail">
+                        <%= typeof done[i].details != 'undefined' ? done[i].details : '' %>
+                    </span>
+                </div>
+            </a>
+        </div>
+        <% } %>
+    </div>
+    <div class="row my-4 collapse" id="expireJobs">
+        <legend class="text-center">Süresi Geçen/Teklif Almayan İşlerim</legend>
+        <%
+        expire.sort(function(a,b){
+            return (b.lastDate.getTime() - a.lastDate.getTime());
+        });
+        %>
+        <% for (var i=0;i<expire.length;i++){ %>
+        <div class="col-md-4 mb-2" id="task">
+            <a href="/job/is/<%= expire[i].title %>/<%= expire[i].id %>" class="w-100 h-100">
+                <div class="rounded border border-dark p-2 bg-light text-dark">
+                    <p class="text-left">
+                        <span class="h6"><%= typeof expire[i].title != 'undefined' ? expire[i].title : '' %></span>
+                        <span class="text-secondary float-right">Son Tarih : 
+                            <%= typeof expire[i].lastDate != 'undefined' ? 
+                                expire[i].lastDate.getUTCDate() + '.' + (expire[i].lastDate.getUTCMonth() + 1) 
+                                + '.' + expire[i].lastDate.getUTCFullYear() : '' %>
+                        </span>
+                    </p>
+                    <hr>
+                    <span class="text-justify detail">
+                        <%= typeof expire[i].details != 'undefined' ? expire[i].details : '' %>
+                    </span>
+                </div>
+            </a>
+        </div>
+        <% } %>
+    </div>
+</div>

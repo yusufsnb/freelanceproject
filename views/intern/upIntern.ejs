@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row my-5">
+        <div class="col-md-6 card card-body border-dark">
+            <% include ../partials/messages %>
+            <form action="/intern/yukle" method="post" role="form">
+                <div class="form-group">
+                    <label>Şirketin Adı</label>
+                    <input type="text" name="compName" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label>İletişim Mail Adresi</label>
+                    <input type="email" class="form-control" name="mail"/>
+                </div>
+                <div class="form-group">
+                    <label>İl</label>
+                    <select class="form-control" name="city">
+                        <option>İstanbul</option>
+                        <option>Düzce</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Staj Dönemi</label>
+                    <select class="form-control" name="tur">
+                        <option>Kış</option>
+                        <option>Yaz</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Staj Hakkında Bilgi</label>
+                    <textarea class="form-control" style="resize:none;" rows="5" name="info"></textarea>
+                </div>
+                <div class="form-group">
+                    <legend>Şirket Linkleri</legend>
+                    <label>LinkedIn Linki</label>
+                    <input type="text" name="linkedin" class="form-control"/><br/>
+                    <label>Staj Bilgileri Linki</label>
+                    <input type="text" name="info_link" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="yol"/><span class="h6 ml-2">Yol</span>
+                    <input type="checkbox" class="ml-2" name="yemek"/><span class="h6 ml-2">Yemek</span>
+                    <input type="checkbox" class="ml-2" name="yer"/><span class="h6 ml-2">Kalacak Yer</span>
+                    <input type="checkbox" class="ml-2" name="maas"/><span class="h6 ml-2">Maaş</span>
+                </div>
+                <button type="submit" class="btn btn-dark btn-block">Yükle</button>
+            </form>
+        </div>
+    </div>
+</div>

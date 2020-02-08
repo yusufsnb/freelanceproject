@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row mt-4 mb-2">
+        <div class="col-md-5">
+            <form action='/iletisim' method="post" role="form">
+                <div class="form-group">
+                    <label for="name">Adınız ve Soyadınız</label>
+                    <input type="text" name="username" id="name" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="mail">Email adresiniz</label>
+                    <input type="email" name="mail" id="mail" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label for="subj">Konu Başlığı</label>
+                    <input type="text" name="subject" id="subj" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label>Şikayet/Öneri veya yorumunuz</label>
+                    <textarea name="message" class="form-control" rows="4" 
+                              placeholder="Bir şeyler yaz..." style="resize:none;" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark float-right">Gönder</button>
+            </form>
+            <p><%= typeof errMsg != 'undefined' ? errMsg : '' %></p>
+        </div>
+        <div class="col md-7">
+            <div class="my-5 mt-2">
+                <i class="fas fa-user my-1 mx-2"></i>Yusuf Sina Bakan<br/>
+                <i class="fas fa-envelope my-1 mx-2"></i>yusufsina.bakan@hotmail.com<br/>
+            </div>
+            <div id="map" style="width:100%;height:68%;"></div>
+            <script>
+                var map;
+                function initMap() {
+                    map = new google.maps.Map(document.getElementById('map'), {
+                        center: {lat: 40.827495, lng: 31.185998},
+                        zoom: 17
+                    });
+                }
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbkbckXjcSj4lNiQUrl4Chb371d8rxV7Q&callback=initMap"
+                    async defer></script>
+        </div>
+    </div>
+</div>
